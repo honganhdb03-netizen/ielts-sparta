@@ -53,6 +53,7 @@
         <ul class="nav-links">
           <li><a href="#productExperienceSection" class="nav-link">Bài thi</a></li>
           <li><a href="#aiScoringSection" class="nav-link">AI chấm điểm</a></li>
+          <li><a href="#videoSection" class="nav-link">Video</a></li>
           <li><a href="#pricingSection" class="nav-link">Bảng giá</a></li>
           <li><a href="#testimonialsSection" class="nav-link">Đánh giá</a></li>
         </ul>
@@ -77,6 +78,7 @@
         <ul class="mobile-nav-links">
           <li><a href="#productExperienceSection" class="mobile-nav-link">Bài thi</a></li>
           <li><a href="#aiScoringSection" class="mobile-nav-link">AI chấm điểm</a></li>
+          <li><a href="#videoSection" class="mobile-nav-link">Video</a></li>
           <li><a href="#pricingSection" class="mobile-nav-link">Bảng giá</a></li>
           <li><a href="#testimonialsSection" class="mobile-nav-link">Đánh giá</a></li>
         </ul>
@@ -711,7 +713,65 @@
     </div>
   </section>
 
+  <!-- ==========================================================================
+       SECTION 4 — VIDEO DEMO IELTS SPARTA (TRẢI NGHIỆM THI THỰC TẾ)
+       ========================================================================== -->
+  <section class="sparta-video-section" id="videoSection">
+    <div class="container">
+      <div class="section-header text-center" style="margin-bottom: 32px;">
+        <h2 class="section-title dark-text">
+          Video trải nghiệm thi thử <span class="title-accent-orange">IELTS Sparta</span>
+        </h2>
+        <p class="section-subtitle dark-sub">
+          Xem cận cảnh quy trình thi thử 4 kỹ năng chuẩn máy tính và công nghệ AI chấm điểm thông minh
+        </p>
+      </div>
 
+      <div class="sparta-video-container">
+        <div class="sparta-video-card">
+          <div class="video-media-wrapper" id="videoMediaWrapper">
+            <video 
+              id="spartaDemoVideo" 
+              class="sparta-video-player" 
+              controls 
+              preload="metadata" 
+              playsinline
+              poster="assets/hero-cbt-room.jpg"
+            >
+              <source src="assets/ielts-sparta-video.mp4" type="video/mp4">
+              Trình duyệt của bạn không hỗ trợ định dạng video này.
+            </video>
+
+            <!-- Custom Interactive Play Button Overlay -->
+            <button type="button" class="video-play-btn-overlay" id="videoPlayOverlayBtn" aria-label="Bấm để phát video trải nghiệm IELTS Sparta">
+              <span class="play-pulse-ring" aria-hidden="true"></span>
+              <span class="play-btn-circle">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="6 3 20 12 6 21 6 3"/>
+                </svg>
+              </span>
+            </button>
+          </div>
+
+          <!-- Video Feature Highlights Bar -->
+          <div class="video-highlights-bar">
+            <div class="video-highlight-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>Chuẩn thời gian &amp; giao diện thi thật</span>
+            </div>
+            <div class="video-highlight-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span>AI phân tích chi tiết phát âm &amp; ngữ pháp</span>
+            </div>
+            <div class="video-highlight-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span>Nhận band điểm dự kiến chỉ sau 30 giây</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ==========================================================================
        SECTION 5 — PRICING & PACKAGES (CHỌN GÓI THI THỬ PHÙ HỢP VỚI BẠN)

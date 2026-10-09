@@ -6549,6 +6549,189 @@ p {
 }
 
 /* ==========================================================================
+   SECTION 4 — VIDEO DEMO SECTION (IELTS SPARTA)
+   Luminous Daylight Studio Aesthetic, Floating 3D Video Frame
+   ========================================================================== */
+.sparta-video-section {
+  padding: 64px 0 70px;
+  position: relative;
+  background: #F8FAFD;
+  border-top: 1px solid #E2ECF6;
+  border-bottom: 1px solid #E2ECF6;
+}
+
+.sparta-video-container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.sparta-video-card {
+  background: #FFFFFF;
+  border: 1.5px solid #DCE6F2;
+  border-radius: 22px;
+  box-shadow: 0 16px 44px rgba(7, 27, 61, 0.08), 0 2px 10px rgba(7, 27, 61, 0.03);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.sparta-video-card:hover {
+  border-color: #BED8F4;
+  box-shadow: 0 20px 52px rgba(7, 27, 61, 0.11), 0 4px 14px rgba(7, 27, 61, 0.04);
+}
+
+.video-media-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #071B3D;
+  overflow: hidden;
+}
+
+.sparta-video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: #071B3D;
+}
+
+/* Custom Interactive Play Button Overlay */
+.video-play-btn-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.video-play-btn-overlay.is-playing {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.85);
+}
+
+.play-btn-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF6600 0%, #FF4800 100%);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(255, 90, 0, 0.42);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.play-btn-circle svg {
+  margin-left: 3px;
+  transition: transform 0.2s ease;
+}
+
+.video-play-btn-overlay:hover .play-btn-circle {
+  transform: scale(1.08);
+  box-shadow: 0 10px 32px rgba(255, 90, 0, 0.55);
+}
+
+.video-play-btn-overlay:hover .play-btn-circle svg {
+  transform: scale(1.05);
+}
+
+/* Glowing Pulsing Ring */
+.play-pulse-ring {
+  position: absolute;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: rgba(255, 90, 0, 0.25);
+  animation: videoPlayPulse 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  z-index: 1;
+}
+
+@keyframes videoPlayPulse {
+  0% {
+    transform: scale(0.75);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* Feature Highlights Bar */
+.video-highlights-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 18px 24px;
+  background: #FAFDFE;
+  border-top: 1px solid #EBF2FA;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.video-highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-gray-navy, #52637A);
+}
+
+.video-highlight-item svg {
+  color: #FF5A00;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .sparta-video-section {
+    padding: 44px 0 52px;
+  }
+
+  .sparta-video-card {
+    border-radius: 16px;
+  }
+
+  .play-btn-circle {
+    width: 58px;
+    height: 58px;
+  }
+
+  .play-btn-circle svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .play-pulse-ring {
+    width: 78px;
+    height: 78px;
+  }
+
+  .video-highlights-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px 18px;
+    gap: 10px;
+  }
+
+  .video-highlight-item {
+    font-size: 12.5px;
+  }
+}
+
+/* ==========================================================================
    SECTION 5 — SPARTA PRICING PACKAGES (High-Key Daylight Studio)
    ========================================================================== */
 .sparta-pricing-section {

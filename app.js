@@ -69,6 +69,7 @@
     initAiProductShowcase();
     initAiLightbox();
     initLiveToastNotification();
+    initVideoPlayer();
   });
 
   // ==========================================================================
@@ -1326,6 +1327,40 @@
         if (cycleInterval) clearInterval(cycleInterval);
       });
     }
+  }
+
+  // ==========================================================================
+  // 15. IELTS SPARTA VIDEO DEMO PLAYER
+  // ==========================================================================
+  function initVideoPlayer() {
+    const video = document.getElementById('spartaDemoVideo');
+    const playBtn = document.getElementById('videoPlayOverlayBtn');
+
+    if (!video || !playBtn) return;
+
+    playBtn.addEventListener('click', () => {
+      if (video.paused) {
+        video.play().catch(err => {
+          console.warn('[VideoPlayer] Play interrupted or blocked:', err);
+        });
+      } else {
+        video.pause();
+      }
+    });
+
+    video.addEventListener('play', () => {
+      playBtn.classList.add('is-playing');
+      ConversionTracker.trackOnce('video_play', { video_name: 'ielts_sparta_demo' });
+    });
+
+    video.addEventListener('pause', () => {
+      playBtn.classList.remove('is-playing');
+    });
+
+    video.addEventListener('ended', () => {
+      playBtn.classList.remove('is-playing');
+      ConversionTracker.trackOnce('video_complete', { video_name: 'ielts_sparta_demo' });
+    });
   }
 
 })();
