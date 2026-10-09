@@ -1059,8 +1059,8 @@ p {
   bottom: 0;
   left: 0;
   right: 0;
-  background-image: url('assets/hero-cbt-room.jpg');
-  background-position: center 35%;
+  background-image: url('assets/hero-cbt-room.jpg?v=3');
+  background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
   filter: blur(2.5px);
