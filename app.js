@@ -768,15 +768,15 @@
   // 10. FORM COUNTDOWN TIMER — PERSISTENT (localStorage)
   // ==========================================================================
   function initFormCountdownTimer() {
-    const daysEl = document.getElementById('countdownDays');
     const hoursEl = document.getElementById('countdownHours');
     const minsEl = document.getElementById('countdownMinutes');
     const secsEl = document.getElementById('countdownSeconds');
+    const msEl = document.getElementById('countdownMs');
 
-    const finalDaysEl = document.getElementById('finalCountdownDays');
     const finalHoursEl = document.getElementById('finalCountdownHours');
     const finalMinsEl = document.getElementById('finalCountdownMinutes');
     const finalSecsEl = document.getElementById('finalCountdownSeconds');
+    const finalMsEl = document.getElementById('finalCountdownMs');
 
     if (!hoursEl && !finalHoursEl) return;
 
@@ -791,37 +791,38 @@
     }
 
     function renderCountdown() {
-      const remaining = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
+      const remainingMs = Math.max(0, endTime - Date.now());
 
-      if (remaining <= 0) {
+      if (remainingMs <= 0) {
         // Renew countdown for next cycle
         endTime = Date.now() + COUNTDOWN_DURATION;
         localStorage.setItem(COUNTDOWN_KEY, endTime.toString());
       }
 
-      const d = Math.floor(remaining / 86400);
-      const h = Math.floor((remaining % 86400) / 3600);
-      const m = Math.floor((remaining % 3600) / 60);
-      const s = remaining % 60;
+      const totalSecs = Math.floor(remainingMs / 1000);
+      const h = Math.floor(totalSecs / 3600);
+      const m = Math.floor((totalSecs % 3600) / 60);
+      const s = totalSecs % 60;
+      const ms = Math.floor((remainingMs % 1000) / 10);
 
-      const dStr = String(d).padStart(2, '0');
       const hStr = String(h).padStart(2, '0');
       const mStr = String(m).padStart(2, '0');
       const sStr = String(s).padStart(2, '0');
+      const msStr = String(ms).padStart(2, '0');
 
-      if (daysEl) daysEl.textContent = dStr;
       if (hoursEl) hoursEl.textContent = hStr;
       if (minsEl) minsEl.textContent = mStr;
       if (secsEl) secsEl.textContent = sStr;
+      if (msEl) msEl.textContent = msStr;
 
-      if (finalDaysEl) finalDaysEl.textContent = dStr;
       if (finalHoursEl) finalHoursEl.textContent = hStr;
       if (finalMinsEl) finalMinsEl.textContent = mStr;
       if (finalSecsEl) finalSecsEl.textContent = sStr;
+      if (finalMsEl) finalMsEl.textContent = msStr;
     }
 
     renderCountdown();
-    setInterval(renderCountdown, 1000);
+    setInterval(renderCountdown, 35);
   }
 
   // ==========================================================================
