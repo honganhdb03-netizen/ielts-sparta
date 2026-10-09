@@ -947,8 +947,10 @@
 
       const target = parseFloat(el.getAttribute('data-counter-target'));
       const decimals = parseInt(el.getAttribute('data-counter-decimals') || '0', 10);
+      const isVi = el.getAttribute('data-counter-format') === 'vi' || el.getAttribute('data-counter-format') === 'dot';
       const isComma = el.getAttribute('data-counter-format') === 'comma';
-      const duration = 1800; // ms
+      const padLen = parseInt(el.getAttribute('data-counter-pad') || '0', 10);
+      const duration = 1600; // ms
       const startTime = performance.now();
 
       function update(currentTime) {
@@ -958,24 +960,40 @@
         const easeProgress = 1 - Math.pow(1 - progress, 3);
         const currentVal = target * easeProgress;
 
+        let valStr = '';
         if (decimals > 0) {
-          el.textContent = currentVal.toFixed(decimals);
+          valStr = currentVal.toFixed(decimals);
+        } else if (isVi) {
+          valStr = Math.floor(currentVal).toLocaleString('vi-VN');
         } else if (isComma) {
-          el.textContent = Math.floor(currentVal).toLocaleString('en-US');
+          valStr = Math.floor(currentVal).toLocaleString('en-US');
         } else {
-          el.textContent = Math.floor(currentVal).toString();
+          valStr = Math.floor(currentVal).toString();
         }
+
+        if (padLen > 0) {
+          valStr = valStr.padStart(padLen, '0');
+        }
+        el.textContent = valStr;
 
         if (progress < 1) {
           requestAnimationFrame(update);
         } else {
+          let finalStr = '';
           if (decimals > 0) {
-            el.textContent = target.toFixed(decimals);
+            finalStr = target.toFixed(decimals);
+          } else if (isVi) {
+            finalStr = target.toLocaleString('vi-VN');
           } else if (isComma) {
-            el.textContent = target.toLocaleString('en-US');
+            finalStr = target.toLocaleString('en-US');
           } else {
-            el.textContent = target.toString();
+            finalStr = target.toString();
           }
+
+          if (padLen > 0) {
+            finalStr = finalStr.padStart(padLen, '0');
+          }
+          el.textContent = finalStr;
         }
       }
 

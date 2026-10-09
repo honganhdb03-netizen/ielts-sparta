@@ -5645,88 +5645,118 @@ p {
   }
 }
 
-/* 2. CRO TRUST METRICS STRIP (NUMBER TICKER CARDS) */
+/* 2. PREMIUM TRUST BAR: CRO METRICS STRIP (SaaS EdTech Minimalist) */
 .cro-metrics-strip {
-  background: linear-gradient(135deg, #102B56 0%, #194383 50%, #0F2A56 100%) !important;
-  border-top: 1px solid rgba(75, 140, 245, 0.35);
-  border-bottom: 1px solid rgba(75, 140, 245, 0.35);
-  padding: 28px 0;
+  background: linear-gradient(180deg, #071B3D 0%, #0C244E 50%, #071B3D 100%) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 22px 0;
   position: relative;
   z-index: 5;
 }
 
-.cro-metrics-grid {
+.metrics-trust-bar {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(7, 27, 61, 0.28);
 }
 
-.cro-metric-card {
+.metric-trust-col {
+  padding: 22px 18px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 16px;
-  background: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  border-radius: 16px;
-  padding: 18px 22px;
-  box-shadow: 0 10px 28px rgba(7, 27, 61, 0.22);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  transition: background-color 250ms ease, transform 250ms ease;
+  cursor: default;
 }
 
-.cro-metric-card:hover {
-  background: #FFFFFF;
-  border-color: #BED8F4;
-  transform: translateY(-3px);
-  box-shadow: 0 16px 36px rgba(7, 27, 61, 0.35);
+/* Subtle vertical dividers between columns */
+.metric-trust-col:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.metric-icon-wrap {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: #F0F6FF;
-  border: 1px solid #DCEAF8;
-  color: #2F6BFF;
+.metric-trust-col:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.metric-col-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  margin-bottom: 8px;
+  color: #60A5FA;
+  transition: color 250ms ease, transform 250ms ease;
 }
 
-.metric-icon-accent {
-  background: #FFF3EB;
-  border-color: #FED7AA;
+.metric-col-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+}
+
+.metric-trust-col:hover .metric-col-icon {
   color: #FF5A00;
+  transform: translateY(-2px);
 }
 
-.metric-info {
+.metric-col-data {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
-.metric-number-row {
+.metric-col-num-wrap {
   display: flex;
   align-items: baseline;
+  justify-content: center;
   gap: 2px;
-  font-family: var(--font-family);
-  font-size: 28px;
-  font-weight: 800;
-  line-height: 1.15;
-  color: #071B3D;
+  line-height: 1.1;
+  margin-bottom: 5px;
 }
 
-.metric-suffix {
+.metric-col-val {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(26px, 2.2vw, 32px);
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.metric-col-accent {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(20px, 1.8vw, 24px);
+  font-weight: 800;
   color: #FF5A00;
-  font-size: 22px;
-  font-weight: 800;
+  margin-left: 1px;
 }
 
-.metric-label {
-  margin: 4px 0 0 0;
+.metric-col-unit {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #FF5A00;
+  margin-left: 4px;
+}
+
+.metric-col-lbl {
+  font-family: 'Inter', sans-serif;
   font-size: 13.5px;
-  color: #52637A;
   font-weight: 500;
-  line-height: 1.35;
+  color: #CBD5E1;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  white-space: nowrap;
 }
 
 /* 3. SHADCN CRO: AI LAB LIVE INTERACTIVE SCANNER & DEMO BUTTON */
@@ -5840,29 +5870,89 @@ p {
   will-change: scroll-position;
 }
 
-/* RESPONSIVE RULES FOR METRICS STRIP */
-@media (max-width: 1024px) {
-  .cro-metrics-grid {
+/* RESPONSIVE RULES FOR PREMIUM TRUST BAR */
+@media (max-width: 900px) {
+  .cro-metrics-strip {
+    padding: 18px 0;
+  }
+
+  .metrics-trust-bar {
     grid-template-columns: repeat(2, 1fr);
+    border-radius: 18px;
+  }
+
+  .metric-trust-col {
+    padding: 18px 12px;
+  }
+
+  /* Reset desktop right borders */
+  .metric-trust-col:not(:last-child) {
+    border-right: none;
+  }
+
+  /* 2x2 Cross dividers */
+  .metric-trust-col:nth-child(1) {
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .metric-trust-col:nth-child(2) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .metric-trust-col:nth-child(3) {
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .metric-trust-col:nth-child(4) {
+    border: none;
+  }
+
+  .metric-col-val {
+    font-size: 24px;
+  }
+
+  .metric-col-accent {
+    font-size: 20px;
+  }
+
+  .metric-col-lbl {
+    font-size: 12.5px;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 480px) {
   .cro-metrics-strip {
-    padding: 20px 0;
+    padding: 14px 0;
   }
-  .cro-metrics-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
+
+  .metrics-trust-bar {
+    border-radius: 16px;
   }
-  .cro-metric-card {
-    padding: 14px 16px;
+
+  .metric-trust-col {
+    padding: 14px 6px;
   }
-  .metric-number-row {
-    font-size: 24px;
+
+  .metric-col-val {
+    font-size: 21px;
   }
-  .metric-suffix {
-    font-size: 20px;
+
+  .metric-col-accent {
+    font-size: 18px;
+  }
+
+  .metric-col-unit {
+    font-size: 13px;
+  }
+
+  .metric-col-lbl {
+    font-size: 12px;
+  }
+
+  .metric-col-icon svg {
+    width: 18px;
+    height: 18px;
   }
 }
 
