@@ -1059,13 +1059,13 @@ p {
   bottom: 0;
   left: 0;
   right: 0;
-  background-image: url('assets/hero-futuristic-office.png?v=2');
-  background-position: center center;
+  background-image: url('assets/hero-cbt-room.jpg');
+  background-position: center 35%;
   background-size: cover;
   background-repeat: no-repeat;
-  filter: none;
-  transform: scale(1);
-  opacity: 1;
+  filter: blur(2.5px);
+  transform: scale(1.04);
+  opacity: 0.96;
 }
 
 .hero-sparta-overlay {
@@ -1170,29 +1170,51 @@ p {
   letter-spacing: -0.03em;
   font-size: clamp(48px, 4.6vw, 72px);
   color: var(--color-bright-orange) !important;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 38px rgba(255, 255, 255, 0.88), 0 4px 18px rgba(255, 90, 0, 0.35);
+  text-shadow: 
+    0 0 18px rgba(255, 255, 255, 1),
+    0 0 35px rgba(255, 255, 255, 0.96),
+    0 0 58px rgba(255, 255, 255, 0.88),
+    0 4px 18px rgba(255, 90, 0, 0.32);
 }
 
+/* Quầng lóe sáng trắng tỏa rộng (Luminous White Flare Bloom) */
 .hero-title::before {
   content: "";
   position: absolute;
-  top: 48%;
-  left: 45%;
+  top: 50%;
+  left: 48%;
   transform: translate(-50%, -50%);
-  width: 130%;
-  height: 155%;
+  width: 145%;
+  height: 175%;
   background: 
-    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.55) 45%, rgba(255, 255, 255, 0.20) 75%, transparent 100%);
+    radial-gradient(ellipse 80% 65% at 50% 50%, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.85) 32%, rgba(255, 255, 255, 0.45) 62%, transparent 88%);
   filter: blur(14px);
   pointer-events: none;
-  z-index: -1;
+  z-index: 0;
   border-radius: 50%;
+}
+
+/* Vệt tia sáng quang học lóe ngang (Horizontal Optical Flare Streak) */
+.hero-title::after {
+  content: "";
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  transform: translate(-50%, -50%) rotate(-4deg);
+  width: 105%;
+  height: 52px;
+  background: radial-gradient(ellipse 92% 75% at 50% 50%, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.7) 42%, transparent 82%);
+  filter: blur(8px);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .hero-title .title-part {
   display: block;
   white-space: nowrap;
   color: var(--color-bright-orange) !important;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-subtitle {
