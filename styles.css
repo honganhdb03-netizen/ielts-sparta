@@ -6669,32 +6669,6 @@ p {
   }
 }
 
-/* Feature Highlights Bar */
-.video-highlights-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 18px 24px;
-  background: #FAFDFE;
-  border-top: 1px solid #EBF2FA;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.video-highlight-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--color-gray-navy, #52637A);
-}
-
-.video-highlight-item svg {
-  color: #FF5A00;
-  flex-shrink: 0;
-}
-
 @media (max-width: 768px) {
   .sparta-video-section {
     padding: 44px 0 52px;
@@ -6717,17 +6691,6 @@ p {
   .play-pulse-ring {
     width: 78px;
     height: 78px;
-  }
-
-  .video-highlights-bar {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 14px 18px;
-    gap: 10px;
-  }
-
-  .video-highlight-item {
-    font-size: 12.5px;
   }
 }
 
