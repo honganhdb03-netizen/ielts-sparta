@@ -799,20 +799,22 @@
         localStorage.setItem(COUNTDOWN_KEY, endTime.toString());
       }
 
-      const h = Math.floor(remaining / 3600);
+      const d = Math.floor(remaining / 86400);
+      const h = Math.floor((remaining % 86400) / 3600);
       const m = Math.floor((remaining % 3600) / 60);
       const s = remaining % 60;
 
+      const dStr = String(d).padStart(2, '0');
       const hStr = String(h).padStart(2, '0');
       const mStr = String(m).padStart(2, '0');
       const sStr = String(s).padStart(2, '0');
 
-      if (daysEl) daysEl.textContent = '00';
+      if (daysEl) daysEl.textContent = dStr;
       if (hoursEl) hoursEl.textContent = hStr;
       if (minsEl) minsEl.textContent = mStr;
       if (secsEl) secsEl.textContent = sStr;
 
-      if (finalDaysEl) finalDaysEl.textContent = '00';
+      if (finalDaysEl) finalDaysEl.textContent = dStr;
       if (finalHoursEl) finalHoursEl.textContent = hStr;
       if (finalMinsEl) finalMinsEl.textContent = mStr;
       if (finalSecsEl) finalSecsEl.textContent = sStr;
