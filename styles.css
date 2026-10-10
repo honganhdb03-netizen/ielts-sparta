@@ -7543,16 +7543,16 @@ a:hover,
 }
 
 /* ==========================================================================
-   CRO URGENCY & SCARCITY COMPONENT — "CHỈ CÒN 20 SUẤT ƯU ĐÃI 99K"
+   CRO URGENCY & SCARCITY COMPONENT — ÍT CHỮ, TO RÕ, NỔI BẬT
    ========================================================================== */
 .slots-scarcity-card {
-  background: linear-gradient(135deg, #FFF9F4 0%, #FFF3E8 100%);
-  border: 1.5px solid #FFD4B2;
-  border-radius: 14px;
-  padding: 10px 14px 10px;
-  margin-top: 10px;
-  margin-bottom: 12px;
-  box-shadow: 0 4px 16px rgba(234, 88, 12, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  background: linear-gradient(135deg, #FFF9F4 0%, #FFF2E6 100%);
+  border: 1.5px solid #FFCBA4;
+  border-radius: 16px;
+  padding: 13px 18px 12px;
+  margin-top: 12px;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 20px rgba(255, 90, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
   position: relative;
   overflow: hidden;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -7560,32 +7560,32 @@ a:hover,
 
 .slots-scarcity-card:hover {
   border-color: #FB923C;
-  box-shadow: 0 6px 20px rgba(234, 88, 12, 0.12);
+  box-shadow: 0 8px 26px rgba(255, 90, 0, 0.14);
 }
 
-.slots-scarcity-header {
+.slots-scarcity-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 7px;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
-.slots-beacon-wrap {
+.slots-callout {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 9px;
 }
 
 /* Pulsing radar beacon dot */
 .slots-live-beacon {
   position: relative;
   display: inline-block;
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: #EF4444;
-  box-shadow: 0 0 8px rgba(239, 68, 68, 0.7);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.85);
   flex-shrink: 0;
 }
 
@@ -7594,7 +7594,7 @@ a:hover,
   position: absolute;
   inset: -4px;
   border-radius: 50%;
-  border: 2px solid rgba(239, 68, 68, 0.6);
+  border: 2px solid rgba(239, 68, 68, 0.7);
   animation: liveBeaconWave 1.6s infinite ease-out;
   pointer-events: none;
 }
@@ -7610,25 +7610,34 @@ a:hover,
   }
 }
 
-.slots-scarcity-title {
-  font-size: 13.5px;
-  font-weight: 700;
-  color: #9A3412;
-  letter-spacing: -0.01em;
-  line-height: 1.25;
+/* Main Callout Text: Ít chữ nhưng to, rõ */
+.slots-main-text {
+  font-size: 16.5px;
+  font-weight: 800;
+  color: #1E293B;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  line-height: 1;
 }
 
-.slots-val-highlight {
+/* Số suất to bự nổi bật */
+.slots-giant-val {
   display: inline-block;
-  font-size: 16px;
+  font-size: 26px;
   font-weight: 900;
-  color: #EA580C;
+  color: #FF4500;
+  line-height: 1;
   font-variant-numeric: tabular-nums;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease;
+  letter-spacing: -0.02em;
+  text-shadow: 0 1px 3px rgba(255, 69, 0, 0.2);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* Dynamic slot decrease pulse effect */
-.slots-val-highlight.slot-bump {
+.slots-giant-val.slot-bump {
   animation: slotNumberBump 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -7639,29 +7648,30 @@ a:hover,
   30% {
     transform: scale(1.4);
     color: #DC2626;
-    text-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+    text-shadow: 0 0 16px rgba(239, 68, 68, 0.7);
   }
   100% {
     transform: scale(1);
-    color: #EA580C;
-    text-shadow: none;
+    color: #FF4500;
   }
 }
 
-.slots-badge-urgent {
+/* Urgent Badge */
+.slots-urgent-badge {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  font-size: 11px;
+  gap: 4px;
+  font-size: 12px;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.4px;
   color: #DC2626;
   background: #FEE2E2;
-  border: 1px solid #FECACA;
-  padding: 2px 7px;
+  border: 1.5px solid #FECACA;
+  padding: 4px 10px;
   border-radius: 999px;
   white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.12);
   animation: pulseUrgentBadge 2s infinite ease-in-out;
 }
 
@@ -7670,29 +7680,29 @@ a:hover,
     transform: scale(1);
   }
   50% {
-    transform: scale(1.04);
+    transform: scale(1.05);
     background: #FED7D7;
   }
 }
 
-/* Progress bar */
+/* Thang tiến độ dày dặn to rõ (11px) */
 .slots-progress-track {
   width: 100%;
-  height: 8px;
-  background: #FFE2CC;
+  height: 11px;
+  background: #FED7AA;
   border-radius: 999px;
   overflow: hidden;
   position: relative;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .slots-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #FF7A00 0%, #FF3D00 100%);
+  background: linear-gradient(90deg, #FF7A00 0%, #FF2600 100%);
   border-radius: 999px;
   position: relative;
   transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 4px rgba(255, 61, 0, 0.35);
+  box-shadow: 0 0 10px rgba(255, 38, 0, 0.45);
 }
 
 .slots-shimmer-sweep {
@@ -7701,7 +7711,7 @@ a:hover,
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.65) 50%, transparent 100%);
   animation: slotsShimmer 2.2s infinite ease-in-out;
 }
 
@@ -7714,37 +7724,31 @@ a:hover,
   }
 }
 
-/* Footer stats */
-.slots-scarcity-footer {
+/* Dòng dưới ngắn gọn to rõ */
+.slots-scarcity-bottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  margin-top: 6px;
-  font-size: 11.5px;
-  color: #78350F;
+  gap: 10px;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748B;
 }
 
-.slots-registered-stat strong {
+.slots-scarcity-bottom strong {
   color: #C2410C;
   font-weight: 800;
+  font-size: 14.5px;
 }
 
-.slots-viewer-stat {
+.slots-closing-tag {
+  color: #DC2626;
+  font-weight: 800;
+  font-size: 12.5px;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  color: #9A3412;
-  font-weight: 600;
-}
-
-.slots-eye-dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #10B981;
-  box-shadow: 0 0 5px rgba(16, 185, 129, 0.8);
+  gap: 3px;
 }
 
 /* Final CTA Scarcity Special Layout */
@@ -7753,8 +7757,8 @@ a:hover,
   margin-top: 14px;
   margin-bottom: 16px;
   background: #FFFFFF;
-  border: 1.5px solid #FED7AA;
-  box-shadow: 0 4px 18px rgba(255, 90, 0, 0.08);
+  border: 1.5px solid #FFCBA4;
+  box-shadow: 0 6px 22px rgba(255, 90, 0, 0.09);
 }
 
 /* Sticky Mobile Bar Scarcity Tag */
@@ -7779,20 +7783,32 @@ a:hover,
 
 @media (max-width: 480px) {
   .slots-scarcity-card {
-    padding: 9px 12px;
+    padding: 11px 14px 10px;
   }
   
-  .slots-scarcity-title {
-    font-size: 12.5px;
+  .slots-main-text {
+    font-size: 14.5px;
+  }
+
+  .slots-giant-val {
+    font-size: 22px;
   }
   
-  .slots-badge-urgent {
-    font-size: 10px;
-    padding: 1px 6px;
-  }
-  
-  .slots-scarcity-footer {
+  .slots-urgent-badge {
     font-size: 10.5px;
+    padding: 3px 8px;
+  }
+
+  .slots-progress-track {
+    height: 9px;
+  }
+  
+  .slots-scarcity-bottom {
+    font-size: 12px;
+  }
+
+  .slots-scarcity-bottom strong {
+    font-size: 13.5px;
   }
 }
 
