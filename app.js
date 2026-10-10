@@ -65,7 +65,6 @@
     initStickyStackedCards();
     initFormCountdownTimer();
     initNumberTicker();
-    initPricingPackages();
     initAiProductShowcase();
     initAiLightbox();
     initLiveToastNotification();
@@ -837,7 +836,7 @@
     const sections = [
       { id: 'productExperienceSection', linkSelector: 'a[href="#productExperienceSection"]' },
       { id: 'aiScoringSection', linkSelector: 'a[href="#aiScoringSection"]' },
-      { id: 'pricingSection', linkSelector: 'a[href="#pricingSection"]' },
+      { id: 'videoSection', linkSelector: 'a[href="#videoSection"]' },
       { id: 'testimonialsSection', linkSelector: 'a[href="#testimonialsSection"]' }
     ];
 
