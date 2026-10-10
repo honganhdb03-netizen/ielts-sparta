@@ -23,7 +23,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
   
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="styles.css?v=58">
+  <link rel="stylesheet" href="styles.css?v=59">
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/sparta-logo.png">
@@ -204,6 +204,26 @@
                     <span class="digit-val" id="countdownMs">99</span>
                     <span class="digit-lbl">ms</span>
                   </div>
+                </div>
+              </div>
+
+              <!-- Scarcity Urgency Bar: Chỉ còn 20 suất ưu đãi 99K -->
+              <div class="slots-scarcity-card" id="heroSlotsCard" aria-label="Số lượng suất ưu đãi còn lại hôm nay">
+                <div class="slots-scarcity-header">
+                  <div class="slots-beacon-wrap">
+                    <span class="slots-live-beacon" aria-hidden="true"></span>
+                    <span class="slots-scarcity-title">Chỉ còn <strong class="slots-val-highlight" id="heroSlotsCount">20</strong> suất ưu đãi 99K hôm nay</span>
+                  </div>
+                  <span class="slots-badge-urgent">🔥 Sắp hết</span>
+                </div>
+                <div class="slots-progress-track">
+                  <div class="slots-progress-fill" id="heroSlotsBar" style="width: 80%;">
+                    <span class="slots-shimmer-sweep" aria-hidden="true"></span>
+                  </div>
+                </div>
+                <div class="slots-scarcity-footer">
+                  <span class="slots-registered-stat">Đã có <strong id="heroRegisteredCount">80</strong>/100 bạn đăng ký</span>
+                  <span class="slots-viewer-stat"><span class="slots-eye-dot"></span> 18 người đang xem</span>
                 </div>
               </div>
 
@@ -1534,6 +1554,26 @@
               </div>
             </div>
 
+            <!-- Scarcity Urgency Bar (Final CTA) -->
+            <div class="slots-scarcity-card final-cta-scarcity" id="finalSlotsCard" aria-label="Số lượng suất ưu đãi còn lại hôm nay">
+              <div class="slots-scarcity-header">
+                <div class="slots-beacon-wrap">
+                  <span class="slots-live-beacon" aria-hidden="true"></span>
+                  <span class="slots-scarcity-title">Chỉ còn <strong class="slots-val-highlight" id="finalSlotsCount">20</strong> suất ưu đãi 99K hôm nay</span>
+                </div>
+                <span class="slots-badge-urgent">🔥 Sắp hết</span>
+              </div>
+              <div class="slots-progress-track">
+                <div class="slots-progress-fill" id="finalSlotsBar" style="width: 80%;">
+                  <span class="slots-shimmer-sweep" aria-hidden="true"></span>
+                </div>
+              </div>
+              <div class="slots-scarcity-footer">
+                <span class="slots-registered-stat">Đã có <strong id="finalRegisteredCount">80</strong>/100 bạn giữ chỗ</span>
+                <span class="slots-viewer-stat"><span class="slots-eye-dot"></span> Đăng ký giữ ưu đãi</span>
+              </div>
+            </div>
+
             <!-- CTA Action Button: Nhận ưu đãi → -->
             <div class="cta-action-wrap">
               <a href="#leadFormCard" class="btn-primary btn-magic-beam" id="finalCtaBtn">
@@ -1597,6 +1637,7 @@
     <div class="sticky-cta-info">
       <div class="sticky-cta-badge-line">
         <span class="sticky-pill-flash">ƯU ĐÃI 99K</span>
+        <span class="sticky-slots-tag">Còn <strong id="stickySlotsCount">20</strong> suất</span>
         <span class="sticky-cta-price">99.000đ</span>
       </div>
       <span class="sticky-cta-title">Thi thử IELTS 4 kỹ năng</span>
@@ -1739,6 +1780,6 @@
   </aside>
 
   <!-- JavaScript -->
-  <script src="app.js?v=23"></script>
+  <script src="app.js?v=24"></script>
 </body>
 </html>

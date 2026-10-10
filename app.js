@@ -69,6 +69,7 @@
     initAiLightbox();
     initLiveToastNotification();
     initVideoPlayer();
+    initSlotsScarcity();
   });
 
   // ==========================================================================
@@ -1275,6 +1276,11 @@
       // Hiển thị toast
       toast.classList.add('active');
 
+      // Giảm suất đăng ký và kích hoạt hiệu ứng khan hiếm
+      if (typeof window.decreaseSpartaSlot === 'function') {
+        window.decreaseSpartaSlot();
+      }
+
       // Tự động ẩn sau 4 giây
       setTimeout(() => {
         toast.classList.remove('active');
@@ -1333,6 +1339,71 @@
       playBtn.classList.remove('is-playing');
       ConversionTracker.trackOnce('video_complete', { video_name: 'ielts_sparta_demo' });
     });
+  }
+
+  // ==========================================================================
+  // 16. CRO URGENCY & SCARCITY ("CHỈ CÒN 20 SUẤT ƯU ĐÃI 99K")
+  // ==========================================================================
+  function initSlotsScarcity() {
+    const heroCount = document.getElementById('heroSlotsCount');
+    const heroReg = document.getElementById('heroRegisteredCount');
+    const heroBar = document.getElementById('heroSlotsBar');
+
+    const finalCount = document.getElementById('finalSlotsCount');
+    const finalReg = document.getElementById('finalRegisteredCount');
+    const finalBar = document.getElementById('finalSlotsBar');
+
+    const stickyCount = document.getElementById('stickySlotsCount');
+
+    // Khởi tạo số suất còn lại từ sessionStorage (mặc định 20 suất, sàn thấp nhất 12 suất)
+    let storedSlots = parseInt(sessionStorage.getItem('sparta_slots_remaining'), 10);
+    if (isNaN(storedSlots) || storedSlots < 12 || storedSlots > 20) {
+      storedSlots = 20;
+      sessionStorage.setItem('sparta_slots_remaining', '20');
+    }
+
+    let remainingSlots = storedSlots;
+    const totalSlots = 100;
+
+    function renderSlots(animateBump = false) {
+      const registered = totalSlots - remainingSlots;
+      const percent = (registered / totalSlots) * 100;
+
+      // Cập nhật text số suất còn lại trên Hero, Final CTA và Sticky Mobile
+      [heroCount, finalCount, stickyCount].forEach(el => {
+        if (!el) return;
+        el.textContent = remainingSlots;
+        if (animateBump) {
+          el.classList.remove('slot-bump');
+          void el.offsetWidth; // Trigger reflow
+          el.classList.add('slot-bump');
+        }
+      });
+
+      // Cập nhật text số học viên đã đăng ký
+      [heroReg, finalReg].forEach(el => {
+        if (el) el.textContent = registered;
+      });
+
+      // Cập nhật độ rộng thanh tiến độ
+      [heroBar, finalBar].forEach(bar => {
+        if (bar) bar.style.width = `${percent}%`;
+      });
+
+      sessionStorage.setItem('sparta_slots_remaining', remainingSlots.toString());
+    }
+
+    // Render ban đầu ngay khi tải trang
+    renderSlots(false);
+
+    // Hàm giảm suất đăng ký khi có toast hoặc người dùng tương tác
+    window.decreaseSpartaSlot = function() {
+      // Giới hạn giảm tối đa xuống 12 để luôn tạo cảm giác khan hiếm cấp bách
+      if (remainingSlots > 12) {
+        remainingSlots -= 1;
+        renderSlots(true);
+      }
+    };
   }
 
 })();
