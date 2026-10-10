@@ -586,7 +586,6 @@
   // 9. SPARTA HORIZONTAL SLIDER (4 LẦN TRƯỢT SANG BÊN: 4 KỸ NĂNG THI IELTS)
   // ==========================================================================
   function initStickyStackedCards() {
-    const track = document.getElementById('spartaScrollTrack');
     const cardsTrack = document.getElementById('spartaCardsTrack');
     const tabs = document.querySelectorAll('.deck-progress-tab');
     const prevBtn = document.getElementById('deckNavPrev');
@@ -599,8 +598,6 @@
 
     const totalSlides = 4;
     let currentSlide = 0;
-    let isProgrammaticScroll = false;
-    let scrollTimeout = null;
     const skillNames = ['Listening', 'Reading', 'Writing', 'Speaking'];
 
     function goToSlide(index, smooth = true) {
@@ -609,7 +606,7 @@
       currentSlide = index;
 
       if (smooth) {
-        cardsTrack.style.transition = 'transform 0.48s cubic-bezier(0.16, 1, 0.3, 1)';
+        cardsTrack.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
       } else {
         cardsTrack.style.transition = 'none';
       }
@@ -651,33 +648,11 @@
       }
     }
 
-    // Scroll synchronization helper
-    function syncScrollToSlide(idx) {
-      if (!track || window.innerWidth <= 768) return;
-      isProgrammaticScroll = true;
-      clearTimeout(scrollTimeout);
-
-      const rect = track.getBoundingClientRect();
-      const trackTop = window.scrollY + rect.top;
-      const scrollableDist = track.offsetHeight - window.innerHeight;
-      const stickyTop = 76;
-
-      if (scrollableDist > 0) {
-        const targetScrollY = trackTop + (idx / (totalSlides - 1)) * scrollableDist - stickyTop + 2;
-        window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
-      }
-
-      scrollTimeout = setTimeout(() => {
-        isProgrammaticScroll = false;
-      }, 550);
-    }
-
     // Tab Clicks: Jump to chosen skill slide
     tabs.forEach((tab, idx) => {
       tab.addEventListener('click', (e) => {
         e.preventDefault();
         goToSlide(idx);
-        syncScrollToSlide(idx);
       });
     });
 
@@ -687,7 +662,6 @@
         e.preventDefault();
         if (currentSlide > 0) {
           goToSlide(currentSlide - 1);
-          syncScrollToSlide(currentSlide);
         }
       });
     }
@@ -698,7 +672,6 @@
         e.preventDefault();
         if (currentSlide < totalSlides - 1) {
           goToSlide(currentSlide + 1);
-          syncScrollToSlide(currentSlide);
         }
       });
     }
@@ -708,42 +681,8 @@
       dot.addEventListener('click', (e) => {
         e.preventDefault();
         goToSlide(idx);
-        syncScrollToSlide(idx);
       });
     });
-
-    // Desktop Scroll-Driven Horizontal Sliding
-    let ticking = false;
-    function updateOnScroll() {
-      ticking = false;
-      if (isProgrammaticScroll || !track || window.innerWidth <= 768) return;
-
-      const rect = track.getBoundingClientRect();
-      const trackHeight = track.offsetHeight;
-      const vh = window.innerHeight;
-      const stickyTop = 76;
-      const scrollableDist = trackHeight - vh;
-      if (scrollableDist <= 0) return;
-
-      // Distance scrolled through the track
-      const scrolled = Math.max(0, Math.min(scrollableDist, stickyTop - rect.top));
-      const globalProgress = scrolled / scrollableDist; // 0.0 to 1.0
-
-      // Map progress smoothly across 4 slides (0 to 3)
-      const mappedSlide = Math.min(totalSlides - 1, Math.round(globalProgress * (totalSlides - 1)));
-      if (mappedSlide !== currentSlide) {
-        goToSlide(mappedSlide);
-      }
-    }
-
-    function onScroll() {
-      if (!ticking) {
-        requestAnimationFrame(updateOnScroll);
-        ticking = true;
-      }
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
 
     // Touch Swipe / Drag Gestures (iOS / Android / Touch devices)
     let touchStartX = 0;
@@ -773,16 +712,14 @@
         if (diffX < 0 && currentSlide < totalSlides - 1) {
           // Swipe Left -> Next Slide
           goToSlide(currentSlide + 1);
-          syncScrollToSlide(currentSlide);
         } else if (diffX > 0 && currentSlide > 0) {
           // Swipe Right -> Prev Slide
           goToSlide(currentSlide - 1);
-          syncScrollToSlide(currentSlide);
         }
       }
     }
 
-    // Keyboard Arrow Keys (Left & Right) when section is focused/in viewport
+    // Keyboard Arrow Keys (Left & Right) when user is viewing the slider
     window.addEventListener('keydown', (e) => {
       if (!deck) return;
       const rect = deck.getBoundingClientRect();
@@ -791,10 +728,8 @@
 
       if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
         goToSlide(currentSlide + 1);
-        syncScrollToSlide(currentSlide);
       } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
         goToSlide(currentSlide - 1);
-        syncScrollToSlide(currentSlide);
       }
     });
 
