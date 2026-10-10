@@ -329,11 +329,23 @@
             </button>
           </div>
 
-          <!-- Cards Deck Container: Cùng 1 chỗ, di chuột cuộn trượt chồng lớp -->
+          <!-- Cards Slider Container: Trượt ngang 4 kỹ năng -->
           <div class="sparta-cards-deck" id="spartaCardsDeck">
 
-            <!-- CARD 01: LISTENING (Text Left / Image Right) -->
-            <article class="sparta-deck-card card-listening" data-card-index="0" id="deckCardListening" style="--card-index: 0; z-index: 1;">
+            <!-- Navigation Arrow Buttons: Previous & Next -->
+            <button type="button" class="deck-nav-btn deck-nav-prev" id="deckNavPrev" aria-label="Xem kỹ năng trước">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button type="button" class="deck-nav-btn deck-nav-next" id="deckNavNext" aria-label="Xem kỹ năng tiếp theo">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+
+            <!-- Overflow viewport -->
+            <div class="sparta-cards-viewport" id="spartaCardsViewport">
+              <div class="sparta-cards-track" id="spartaCardsTrack">
+
+                <!-- CARD 01: LISTENING (Text Left / Image Right) -->
+                <article class="sparta-deck-card card-listening" data-card-index="0" id="deckCardListening" style="--card-index: 0; z-index: 1;">
               <div class="stacked-card-watermark" aria-hidden="true">
                 <span class="watermark-num">01</span>
                 <span class="watermark-text">LISTENING</span>
@@ -571,6 +583,22 @@
                 </div>
               </div>
             </article>
+
+              </div>
+            </div>
+
+            <!-- Bottom Slide Counter & Dots Indicator -->
+            <div class="deck-bottom-bar">
+              <div class="deck-dots-indicator" id="deckDotsIndicator">
+                <button type="button" class="deck-dot active" data-index="0" aria-label="Kỹ năng 1: Listening"></button>
+                <button type="button" class="deck-dot" data-index="1" aria-label="Kỹ năng 2: Reading"></button>
+                <button type="button" class="deck-dot" data-index="2" aria-label="Kỹ năng 3: Writing"></button>
+                <button type="button" class="deck-dot" data-index="3" aria-label="Kỹ năng 4: Speaking"></button>
+              </div>
+              <div class="deck-counter-badge" id="deckCounterBadge">
+                <span class="deck-current-num">01</span><span class="deck-divider-slash">/</span><span class="deck-total-num">04</span>
+              </div>
+            </div>
 
           </div>
         </div>

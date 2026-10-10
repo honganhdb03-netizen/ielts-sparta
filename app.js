@@ -583,185 +583,223 @@
   }
 
   // ==========================================================================
-  // 9. SPARTA SCROLL-PINNED DECK (4 TRANG PHÒNG THI TRÊN CÙNG 1 SECTION - PREP STYLE)
+  // 9. SPARTA HORIZONTAL SLIDER (4 LẦN TRƯỢT SANG BÊN: 4 KỸ NĂNG THI IELTS)
   // ==========================================================================
   function initStickyStackedCards() {
     const track = document.getElementById('spartaScrollTrack');
-    const stage = document.getElementById('spartaStickyStage');
-    const cards = document.querySelectorAll('.sparta-deck-card');
+    const cardsTrack = document.getElementById('spartaCardsTrack');
     const tabs = document.querySelectorAll('.deck-progress-tab');
+    const prevBtn = document.getElementById('deckNavPrev');
+    const nextBtn = document.getElementById('deckNavNext');
+    const dots = document.querySelectorAll('.deck-dot');
+    const currentNumEl = document.querySelector('.deck-current-num');
+    const deck = document.getElementById('spartaCardsDeck');
 
-    if (!track || !cards.length) return;
+    if (!cardsTrack) return;
 
-    const cardCount = cards.length;
-    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let ticking = false;
-    let isIntersecting = false;
-    let currentActiveIndex = -1;
+    const totalSlides = 4;
+    let currentSlide = 0;
+    let isProgrammaticScroll = false;
+    let scrollTimeout = null;
     const skillNames = ['Listening', 'Reading', 'Writing', 'Speaking'];
 
-    function updateDeck() {
-      ticking = false;
+    function goToSlide(index, smooth = true) {
+      if (index < 0) index = 0;
+      if (index >= totalSlides) index = totalSlides - 1;
+      currentSlide = index;
 
-      // Reset styles on mobile or reduced-motion
-      if (isReducedMotion || window.innerWidth <= 768) {
-        cards.forEach(card => {
-          card.style.transform = '';
-          card.style.filter = '';
-          card.style.opacity = '';
-          card.style.pointerEvents = 'auto';
-        });
-        return;
+      if (smooth) {
+        cardsTrack.style.transition = 'transform 0.48s cubic-bezier(0.16, 1, 0.3, 1)';
+      } else {
+        cardsTrack.style.transition = 'none';
       }
 
-      const rect = track.getBoundingClientRect();
-      const trackHeight = track.offsetHeight;
-      const vh = window.innerHeight;
-      const stickyTop = 76; // matches sticky top offset
+      cardsTrack.style.transform = `translate3d(-${currentSlide * 100}%, 0, 0)`;
 
-      const scrollableDist = trackHeight - vh;
-      if (scrollableDist <= 0) return;
-
-      // Global scroll progress through the pinned track: 0.0 to 1.0
-      const scrolled = Math.max(0, Math.min(scrollableDist, stickyTop - rect.top));
-      const globalProgress = scrolled / scrollableDist;
-
-      const numTransitions = cardCount - 1; // 3 transitions between 4 cards
-
-      for (let i = 0; i < cardCount; i++) {
-        const card = cards[i];
-
-        if (i === 0) {
-          // Base card (Listening)
-          // Scales down and slides up slightly as cards 1, 2, 3 arrive
-          const p1 = Math.min(1, Math.max(0, globalProgress / (1 / numTransitions)));
-          const p2 = Math.min(1, Math.max(0, (globalProgress - 1 / numTransitions) / (1 / numTransitions)));
-          const p3 = Math.min(1, Math.max(0, (globalProgress - 2 / numTransitions) / (1 / numTransitions)));
-
-          const scale = Math.max(0.88, 1 - (0.045 * p1) - (0.035 * p2) - (0.025 * p3));
-          const ty = -(18 * p1 + 16 * p2 + 14 * p3);
-          const brightness = Math.max(0.82, 1 - (0.06 * p1) - (0.04 * p2) - (0.03 * p3));
-          const opacity = Math.max(0.75, 1 - (0.08 * p1) - (0.05 * p2) - (0.05 * p3));
-
-          card.style.transform = `translate3d(0, ${ty.toFixed(1)}px, 0) scale(${scale.toFixed(4)})`;
-          card.style.filter = `brightness(${brightness.toFixed(4)})`;
-          card.style.opacity = opacity.toFixed(4);
-          card.style.pointerEvents = globalProgress < 0.25 ? 'auto' : 'none';
-        } else {
-          // Cards 1, 2, 3
-          // Start below viewport (translateY: 105%), arrive smoothly at translateY(0)
-          const startTime = (i - 1) / numTransitions;
-          const endTime = i / numTransitions;
-
-          let enterProgress = 0;
-          if (globalProgress >= endTime) {
-            enterProgress = 1;
-          } else if (globalProgress <= startTime) {
-            enterProgress = 0;
-          } else {
-            enterProgress = (globalProgress - startTime) / (endTime - startTime);
-          }
-
-          // How much later cards (j > i) push this card down in scale and translateY
-          let scaleDown = 0;
-          let tyDown = 0;
-          let brightDown = 0;
-          let opacDown = 0;
-
-          for (let j = i + 1; j < cardCount; j++) {
-            const sTime = (j - 1) / numTransitions;
-            const eTime = j / numTransitions;
-            let nextP = 0;
-            if (globalProgress >= eTime) nextP = 1;
-            else if (globalProgress <= sTime) nextP = 0;
-            else nextP = (globalProgress - sTime) / (eTime - sTime);
-
-            scaleDown += 0.045 * nextP;
-            tyDown += 18 * nextP;
-            brightDown += 0.06 * nextP;
-            opacDown += 0.08 * nextP;
-          }
-
-          const enterTyPercent = (1 - enterProgress) * 105;
-          const finalTy = -(tyDown);
-          const finalScale = Math.max(0.88, 1 - scaleDown);
-          const finalBrightness = Math.max(0.82, 1 - brightDown);
-          const finalOpacity = enterProgress > 0 ? Math.max(0.75, 1 - opacDown) : 0;
-
-          card.style.transform = `translate3d(0, calc(${enterTyPercent.toFixed(2)}% + ${finalTy.toFixed(1)}px), 0) scale(${finalScale.toFixed(4)})`;
-          card.style.filter = `brightness(${finalBrightness.toFixed(4)})`;
-          card.style.opacity = finalOpacity.toFixed(4);
-
-          // Card is interactive when it's the active topmost card
-          const isCurrentTop = (enterProgress >= 0.7) && (i === cardCount - 1 || globalProgress < (i / numTransitions) + 0.2);
-          card.style.pointerEvents = isCurrentTop ? 'auto' : 'none';
-        }
-      }
-
-      // Determine active index for tabs and tracking
-      const activeIdx = Math.min(cardCount - 1, Math.floor(globalProgress * (cardCount - 0.01)));
+      // Update Tabs
       tabs.forEach((tab, idx) => {
-        const isActive = idx === activeIdx;
+        const isActive = idx === currentSlide;
         tab.classList.toggle('active', isActive);
         tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
       });
 
-      if (activeIdx !== currentActiveIndex) {
-        currentActiveIndex = activeIdx;
-        if (window.ConversionTracker) {
-          ConversionTracker.track('sparta_exam_deck_change', {
-            index: activeIdx,
-            skill: skillNames[activeIdx] || `Skill_${activeIdx}`
-          });
-        }
+      // Update Dots
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === currentSlide);
+      });
+
+      // Update Counter Badge (01 / 04)
+      if (currentNumEl) {
+        currentNumEl.textContent = String(currentSlide + 1).padStart(2, '0');
+      }
+
+      // Update Navigation Buttons state
+      if (prevBtn) {
+        prevBtn.disabled = currentSlide === 0;
+        prevBtn.classList.toggle('disabled', currentSlide === 0);
+      }
+      if (nextBtn) {
+        nextBtn.disabled = currentSlide === totalSlides - 1;
+        nextBtn.classList.toggle('disabled', currentSlide === totalSlides - 1);
+      }
+
+      if (window.ConversionTracker) {
+        ConversionTracker.track('sparta_exam_slide_change', {
+          slide_index: currentSlide,
+          skill: skillNames[currentSlide] || `Skill_${currentSlide}`
+        });
       }
     }
 
-    // Click tabs to smoothly scroll to that specific skill
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        const idx = parseInt(tab.getAttribute('data-index'), 10);
-        if (isNaN(idx)) return;
-        const rect = track.getBoundingClientRect();
-        const trackHeight = track.offsetHeight;
-        const vh = window.innerHeight;
-        const scrollableDist = trackHeight - vh;
-        const numTransitions = cardCount - 1;
-        const targetProg = idx / numTransitions;
-        const targetScrollY = window.pageYOffset + rect.top - 76 + (targetProg * scrollableDist);
+    // Scroll synchronization helper
+    function syncScrollToSlide(idx) {
+      if (!track || window.innerWidth <= 768) return;
+      isProgrammaticScroll = true;
+      clearTimeout(scrollTimeout);
+
+      const rect = track.getBoundingClientRect();
+      const trackTop = window.scrollY + rect.top;
+      const scrollableDist = track.offsetHeight - window.innerHeight;
+      const stickyTop = 76;
+
+      if (scrollableDist > 0) {
+        const targetScrollY = trackTop + (idx / (totalSlides - 1)) * scrollableDist - stickyTop + 2;
         window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
+      }
+
+      scrollTimeout = setTimeout(() => {
+        isProgrammaticScroll = false;
+      }, 550);
+    }
+
+    // Tab Clicks: Jump to chosen skill slide
+    tabs.forEach((tab, idx) => {
+      tab.addEventListener('click', (e) => {
+        e.preventDefault();
+        goToSlide(idx);
+        syncScrollToSlide(idx);
       });
     });
 
+    // Arrow Prev Click: Slide to previous skill
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (currentSlide > 0) {
+          goToSlide(currentSlide - 1);
+          syncScrollToSlide(currentSlide);
+        }
+      });
+    }
+
+    // Arrow Next Click: Slide to next skill
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (currentSlide < totalSlides - 1) {
+          goToSlide(currentSlide + 1);
+          syncScrollToSlide(currentSlide);
+        }
+      });
+    }
+
+    // Dot Clicks
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', (e) => {
+        e.preventDefault();
+        goToSlide(idx);
+        syncScrollToSlide(idx);
+      });
+    });
+
+    // Desktop Scroll-Driven Horizontal Sliding
+    let ticking = false;
+    function updateOnScroll() {
+      ticking = false;
+      if (isProgrammaticScroll || !track || window.innerWidth <= 768) return;
+
+      const rect = track.getBoundingClientRect();
+      const trackHeight = track.offsetHeight;
+      const vh = window.innerHeight;
+      const stickyTop = 76;
+      const scrollableDist = trackHeight - vh;
+      if (scrollableDist <= 0) return;
+
+      // Distance scrolled through the track
+      const scrolled = Math.max(0, Math.min(scrollableDist, stickyTop - rect.top));
+      const globalProgress = scrolled / scrollableDist; // 0.0 to 1.0
+
+      // Map progress smoothly across 4 slides (0 to 3)
+      const mappedSlide = Math.min(totalSlides - 1, Math.round(globalProgress * (totalSlides - 1)));
+      if (mappedSlide !== currentSlide) {
+        goToSlide(mappedSlide);
+      }
+    }
+
     function onScroll() {
-      if (!isIntersecting) return;
       if (!ticking) {
-        requestAnimationFrame(updateDeck);
+        requestAnimationFrame(updateOnScroll);
         ticking = true;
       }
     }
 
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          isIntersecting = entry.isIntersecting;
-          if (isIntersecting) {
-            updateDeck();
-          }
-        });
-      }, { rootMargin: '150px 0px 150px 0px' });
+    window.addEventListener('scroll', onScroll, { passive: true });
 
-      observer.observe(track);
-    } else {
-      isIntersecting = true;
+    // Touch Swipe / Drag Gestures (iOS / Android / Touch devices)
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let touchStartY = 0;
+    let touchEndY = 0;
+
+    if (deck) {
+      deck.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
+
+      deck.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipe();
+      }, { passive: true });
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', () => {
-      requestAnimationFrame(updateDeck);
-    }, { passive: true });
+    function handleSwipe() {
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
 
-    updateDeck();
+      // Horizontal gesture priority
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+        if (diffX < 0 && currentSlide < totalSlides - 1) {
+          // Swipe Left -> Next Slide
+          goToSlide(currentSlide + 1);
+          syncScrollToSlide(currentSlide);
+        } else if (diffX > 0 && currentSlide > 0) {
+          // Swipe Right -> Prev Slide
+          goToSlide(currentSlide - 1);
+          syncScrollToSlide(currentSlide);
+        }
+      }
+    }
+
+    // Keyboard Arrow Keys (Left & Right) when section is focused/in viewport
+    window.addEventListener('keydown', (e) => {
+      if (!deck) return;
+      const rect = deck.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!inView) return;
+
+      if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+        goToSlide(currentSlide + 1);
+        syncScrollToSlide(currentSlide);
+      } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
+        goToSlide(currentSlide - 1);
+        syncScrollToSlide(currentSlide);
+      }
+    });
+
+    // Initialize first slide
+    goToSlide(0, false);
   }
 
   // ==========================================================================

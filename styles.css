@@ -1870,31 +1870,151 @@ p {
   color: #FFE5D4;
 }
 
-/* Cards Deck Container: Holds the stacked cards */
+/* Cards Slider Container: Trượt ngang 4 kỹ năng */
 .sparta-cards-deck {
   position: relative;
   width: 100%;
   max-width: 1180px;
-  height: 490px;
   margin: 0 auto;
 }
 
-/* Individual Deck Card */
-.sparta-deck-card {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+.sparta-cards-viewport {
+  position: relative;
   width: 100%;
+  overflow: hidden;
+  border-radius: 30px;
+  padding: 8px 4px;
+}
+
+.sparta-cards-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* Individual Slider Card */
+.sparta-deck-card {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 100%;
+  position: relative;
   background: #FFFFFF;
   border: 1.5px solid #DCEAF8;
-  border-radius: 30px;
-  box-shadow: 0 20px 50px -10px rgba(7, 27, 61, 0.16), 0 4px 16px rgba(7, 27, 61, 0.04);
+  border-radius: 28px;
+  box-shadow: 0 18px 46px -8px rgba(7, 27, 61, 0.12), 0 4px 14px rgba(7, 27, 61, 0.03);
   padding: 28px 38px;
   overflow: hidden;
-  transform-origin: center bottom;
-  will-change: transform, filter, opacity;
+  box-sizing: border-box;
   transition: box-shadow 0.25s ease;
+}
+
+/* Left / Right Slider Navigation Arrow Buttons */
+.deck-nav-btn {
+  position: absolute;
+  top: 48%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1.5px solid #CFE2F7;
+  color: #071B3D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 30;
+  box-shadow: 0 8px 24px rgba(7, 27, 61, 0.12);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.deck-nav-prev {
+  left: -25px;
+}
+
+.deck-nav-next {
+  right: -25px;
+}
+
+.deck-nav-btn:hover {
+  background: #FF5A00;
+  color: #FFFFFF;
+  border-color: #FF5A00;
+  box-shadow: 0 10px 28px rgba(255, 90, 0, 0.38);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.deck-nav-btn:disabled,
+.deck-nav-btn.disabled {
+  opacity: 0.25;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* Bottom Bar: Dots & Counter Badge */
+.deck-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 18px;
+  position: relative;
+  z-index: 10;
+}
+
+.deck-dots-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.deck-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #CBE0F5;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.deck-dot:hover {
+  background: #90BFEA;
+}
+
+.deck-dot.active {
+  width: 28px;
+  background: linear-gradient(90deg, #1D68BD 0%, #FF5A00 100%);
+  box-shadow: 0 2px 8px rgba(255, 90, 0, 0.35);
+}
+
+.deck-counter-badge {
+  font-family: var(--font-family);
+  font-size: 13px;
+  font-weight: 700;
+  color: #4A6382;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #D4E5F8;
+  padding: 4px 12px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.deck-current-num {
+  color: #FF5A00;
+  font-size: 14px;
+}
+
+.deck-divider-slash {
+  color: #94A3B8;
+}
+
+.deck-total-num {
+  color: #071B3D;
 }
 
 .sparta-deck-card::before {
@@ -2176,21 +2296,28 @@ p {
 /* ==========================================================================
    RESPONSIVE & MOBILE
    ========================================================================== */
+@media (max-width: 1220px) {
+  .deck-nav-prev {
+    left: -14px;
+  }
+  .deck-nav-next {
+    right: -14px;
+  }
+}
+
 @media (max-width: 991px) {
   .sparta-sticky-stage {
     height: auto;
-    max-height: none;
-    min-height: 0;
     padding: 6px 0 0;
   }
   .sparta-cards-deck {
-    height: 500px;
+    height: auto;
   }
   .sparta-deck-card {
     padding: 24px 22px;
   }
   .stacked-card-inner {
-    gap: 24px;
+    gap: 22px;
   }
   .stacked-card-content {
     flex: 0 0 46%;
@@ -2198,37 +2325,55 @@ p {
   .stacked-card-media {
     flex: 1 1 54%;
   }
+  .deck-nav-btn {
+    width: 44px;
+    height: 44px;
+  }
+  .deck-nav-prev {
+    left: -10px;
+  }
+  .deck-nav-next {
+    right: -10px;
+  }
 }
 
 @media (max-width: 768px) {
   .sparta-scroll-pin-track {
     height: auto !important;
-    margin-top: 16px;
+    margin-top: 14px;
   }
   .sparta-sticky-stage {
     position: relative !important;
     top: auto !important;
-    height: auto !important;
-    max-height: none !important;
-    min-height: 0 !important;
     padding: 0 0 20px !important;
   }
   .deck-progress-tabs {
-    display: none !important;
+    display: flex !important;
+    overflow-x: auto;
+    max-width: 100%;
+    scrollbar-width: none;
+    padding: 4px;
+    margin-bottom: 14px;
+  }
+  .deck-progress-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .deck-progress-tab {
+    padding: 6px 12px;
+    font-size: 12px;
+    white-space: nowrap;
   }
   .sparta-cards-deck {
     height: auto !important;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    display: block !important;
+  }
+  .sparta-cards-viewport {
+    border-radius: 20px;
+    padding: 2px;
   }
   .sparta-deck-card {
-    position: relative !important;
-    transform: none !important;
-    filter: none !important;
-    opacity: 1 !important;
-    padding: 22px 18px !important;
-    border-radius: 22px !important;
+    padding: 20px 16px !important;
+    border-radius: 20px !important;
   }
   .stacked-card-watermark {
     display: none !important;
@@ -2236,12 +2381,24 @@ p {
   .stacked-card-inner,
   .sparta-deck-card.layout-reversed .stacked-card-inner {
     flex-direction: column !important;
-    gap: 18px;
+    gap: 16px !important;
   }
   .stacked-card-content {
     flex: 1 1 auto;
     max-width: 100%;
   }
+  .deck-nav-btn {
+    width: 38px;
+    height: 38px;
+    background: rgba(255, 255, 255, 0.95);
+  }
+  .deck-nav-prev {
+    left: 4px;
+  }
+  .deck-nav-next {
+    right: 4px;
+  }
+}
   .stacked-card-badge {
     font-size: 11px;
     padding: 5px 12px;
