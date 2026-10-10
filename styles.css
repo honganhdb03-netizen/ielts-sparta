@@ -1768,7 +1768,7 @@ p {
    ========================================================================== */
 
 .product-experience-section {
-  padding: 58px 0 0;
+  padding: 64px 0 60px;
   background: linear-gradient(180deg, #FFFFFF 0%, #EFF6FE 20%, #EFF6FE 85%, #FFFFFF 100%);
   position: relative;
 }
@@ -1782,6 +1782,7 @@ p {
   height: 380vh;
   position: relative;
   margin-top: 10px;
+  margin-bottom: 36px;
 }
 
 /* Sticky Stage pinned in viewport */
@@ -1797,7 +1798,7 @@ p {
   justify-content: flex-start;
   align-items: center;
   overflow: visible;
-  padding: 8px 0 0;
+  padding: 8px 0 44px;
 }
 
 /* Top Progress Indicator Tabs */
@@ -1958,7 +1959,8 @@ p {
   align-items: center;
   justify-content: center;
   gap: 18px;
-  margin-top: 18px;
+  margin-top: 24px;
+  margin-bottom: 20px;
   position: relative;
   z-index: 10;
 }
@@ -2345,7 +2347,7 @@ p {
   .sparta-sticky-stage {
     position: relative !important;
     top: auto !important;
-    padding: 0 0 20px !important;
+    padding: 0 0 36px !important;
   }
   .deck-progress-tabs {
     display: flex !important;
@@ -2708,7 +2710,7 @@ p {
    Vibrant Accent Orange (#FF5A00), High-Key Pastel Blue (#EBF4FE / #DCEEFE)
    ========================================================================== */
 .ai-showcase-section {
-  padding: 24px 0 56px;
+  padding: 92px 0 72px;
   background: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 65%, #F6FAFE 100%);
   position: relative;
   overflow: hidden;
@@ -3160,7 +3162,7 @@ p {
 /* Responsive adjustments */
 @media (max-width: 991px) {
   .ai-showcase-section {
-    padding: 20px 0 32px;
+    padding: 72px 0 48px;
   }
   .ai-showcase-grid {
     grid-template-columns: 1fr;
@@ -3185,7 +3187,7 @@ p {
 
 @media (max-width: 576px) {
   .ai-showcase-section {
-    padding: 16px 0 20px;
+    padding: 60px 0 36px;
   }
   .ai-showcase-grid {
     gap: 18px;
